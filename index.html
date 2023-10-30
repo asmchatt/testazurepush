@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Brute Force</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+	<h1>Form Example</h1>
+	<form id="myForm">
+		<label for="imagelink">Image link:</label>
+		<!--<input type="text" id="imagelink" name="imagelink"><br><br>-->
+		<select name="imagelink" id="imagelink">
+		<option
+				value="https://cdn.w600.comps.canstockphoto.com/portrait-of-a-young-indian-man-stock-photo_csp17808127.jpg">
+				Standard Man</option>
+			<option
+				value="https://i.dailymail.co.uk/i/pix/2016/03/02/22/31C977B500000578-3473789-image-m-14_1456957701585.jpg">
+				Standard Woman</option>
+			<option
+				value="https://1.bp.blogspot.com/-U8sc4WydZiM/XuumkuisKLI/AAAAAAAAALI/0t9XvD4V2ach7qx116EUWMbutrxPGATSgCLcBGAsYHQ/s1600/Screenshot_2020-06-18-22-46-41-81.png">
+				Saiyami Kher</option>
+			<option value="https://pbs.twimg.com/media/FL3GOH0aAAQc552.jpg">Sivasri Skandaprasad</option>
+			<option
+				value="https://gallery.southindianactress.in/2020/04/priya-bhavani-shankar-photos-kiransa-photography-25.jpg">
+				Priya Bhavani Shankar</option>
+		</select>
+		<br><br>
+		<label for="imagelink">Gender:</label>
+		<select name="gender" id="gender">
+			<option value="Man">Man</option>
+			<option value="Woman">Woman</option>
+		</select>
+		<br><br>
+		<label for="desc">Description:</label>
+		<textarea id="desc" name="desc"></textarea rows="8" cols="160"><br><br>
+
+		<label for="wannasee">Wanna See:</label><br>
+		<textarea id="wannasee" name="wannasee"></textarea rows="8" cols="160"><br><br>
+		<br><br>
+		<label for="timeofday">Time of Day:</label>
+		<input type="text" id="timeofday" name="timeofday" size="50"><br><br>
+
+		<label for="clothesac">Clothes and Accessories:</label><br>
+		<textarea id="clothesac" name="clothesac"></textarea rows="8" cols="160"><br><br>
+		
+		<label for="bigprompt">Big Prompt:</label><br>
+		<textarea id="bigprompt" name="bigprompt" rows="8" cols="160"></textarea ><br><br>
+		<button type="submit">Submit</button>
+	</form>
+	<br><br>
+	<div id="result"></div>
+	<script>
+		$(document).ready(function () {
+			$("#myForm").submit(function (event) {
+				event.preventDefault();
+				var imagelink = $("#imagelink").val();
+				var gender = $("#gender").val();
+				var desc = $("#desc").val();
+				var wannasee = $("#wannasee").val();
+				var timeofday = $("#timeofday").val();
+				var clothesac = $("#clothesac").val();
+				var bigprompt = $("#bigprompt").val();
+				var data = {
+					"imagelink": imagelink,
+					"gender": "Gender: " + gender,
+					"desc": "Image for vision board: Hyper-realistic. " + desc,
+					"wannasee": "I want to see in the background: " + wannasee,
+					"timeofday": "Time of Day: " + timeofday,
+					"clothesac": "Clothes and Accessories: " + clothesac,
+					"bigprompt": bigprompt
+				};
+				$.ajax({
+					type: "POST",
+					url: "https://testazureoct123.azurewebsites.net/api/testhttptrigger?code=lke6QLbWeZm8raeK-VnTuOvwp-ac5vWZInGw34TRkEm1AzFuLn1IHQ==",
+					data: JSON.stringify(data),
+					contentType: "application/json",
+					success: function (response) {
+						var result = "";
+						// for (var i = 0; i < response.length; i++) {
+						// 	result += "<img src=" + response[i] + " border='2'>" + "<br>";
+
+						// }
+						$("#result").html(response);
+					},
+					error: function (xhr, status, error) {
+						console.log(xhr.responseText);
+					}
+				});
+			});
+		});
+	</script>
+</body>
+
+</html>
